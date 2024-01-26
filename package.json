@@ -7,8 +7,8 @@
     "node": ">= 20.9 < 21"
   },
   "scripts": {
-    "start": "node build/src/main.js",
-    "seed": "node build/src/cli.js seed -s 104857600 -n 5",
+    "start": "node build/src/main.js --max-old-space-size=1500 --cpu-shares=1024",
+    "seed": "node build/src/cli.js seed -s 104857600 -n 2",
     "dev": "nodemon build/src/main.js",
     "cli": "node build/src/cli.js",
     "clean": "rimraf coverage build tmp",

@@ -41,3 +41,30 @@ export const  generateFile = (filename: string, sizeInBytes: number): void => {
 
     fileStream.end();
 }
+
+
+// Todo: make this fun async and create files in parallel
+export const  generateFileAsync = (filename: string, sizeInBytes: number): Promise<void> => {
+  return new Promise((resolve) => {
+    const fileSizeInBytes = sizeInBytes;
+    const textChunkSize = 1024; // 1KB chunks
+
+    const directory = path.dirname(filename);
+
+    // Ensure the directory exists
+    if (!fs.existsSync(directory)) {
+        fs.mkdirSync(directory, { recursive: true });
+    }
+
+    const fileStream = fs.createWriteStream(filename);
+
+    for (let i = 0; i < fileSizeInBytes; i += textChunkSize) {
+        const chunkSize = Math.min(textChunkSize, fileSizeInBytes - i);
+        const randomText = generateRandomText(chunkSize);
+        fileStream.write(randomText);
+    }
+
+    fileStream.end();
+    resolve()
+  })
+}

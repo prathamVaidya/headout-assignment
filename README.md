@@ -142,3 +142,10 @@ yarn cli
 - Routes : Used for connecting all the routes to controller functions
 - Controllers : Used for creating controller functions that handles that man HTTP request. They can call and use services 
 - Services : Functions to perform specific operations
+
+## References
+
+- https://stateful.com/blog/process-large-files-nodejs-streams
+- https://itnext.io/using-node-js-to-read-really-really-large-files-pt-1-d2057fe76b33
+- https://medium.com/@ketanpradhan/reading-a-large-files-in-nodejs-39284ef797f4
+- https://nodejs.org/api/fs.html

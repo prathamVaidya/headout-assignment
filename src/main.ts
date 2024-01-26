@@ -26,3 +26,5 @@ const server = http.createServer(async (hReq: IncomingMessage, hRes: ServerRespo
 server.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
+
+export default server

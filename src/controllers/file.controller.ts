@@ -11,8 +11,6 @@ const FileController = async (req: RequestI, res: ResponseI): Promise<void> => {
       throw new HttpError(400, "n is required parameter");
   }
 
-  // Todo: Check any side cases validations
-
   const filePath = `tmp/data/${fileName}.txt`
 
   if(!await fileExists(filePath)){
@@ -25,7 +23,6 @@ const FileController = async (req: RequestI, res: ResponseI): Promise<void> => {
     fileStream.pipe(res)
     fileStream.on('error', (err) => {
       console.error('Error reading file:', err);
-      // throw new HttpError(500, "Internal Server Error: Unable to Read file")
     });
 
     return;
@@ -36,7 +33,6 @@ const FileController = async (req: RequestI, res: ResponseI): Promise<void> => {
   fileStream.pipe(res)
   fileStream.on('error', (err) => {
     console.error('Error reading file:', err);
-    // throw new HttpError(500, "Internal Server Error: Unable to Read file")
   });
 };
 

@@ -8,12 +8,18 @@ const ErrorHandler = (_: RequestI, res: ResponseI, error: Error) : void => {
   if(error instanceof HttpError){
     const httpError = error as HttpErrorI
     res.writeHead(httpError.statusCode, DEFAULT_RESPONSE_TYPE);
-    res.end(httpError.message);
+    res.end(JSON.stringify({
+      error: true,
+      message: httpError.message
+    }));
     return;
   }
 
   res.writeHead(500, DEFAULT_RESPONSE_TYPE);
-  res.end(error.message);
+  res.end(JSON.stringify({
+    error: true,
+    message: error.message
+  }));
 }
 
 

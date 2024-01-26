@@ -1,22 +1,24 @@
 import http, { IncomingMessage, ServerResponse } from 'http';
 import url from 'url';
 import RouteHandler from './routes/index.js';
-import { HttpErrorI } from './types/index.js';
+import { RequestI } from './types/index.js';
 import ErrorHandler from './utils/ErrorHandler.js';
 
 const port = 3000;
 
-const server = http.createServer((req: IncomingMessage, res: ServerResponse) => {
+const server = http.createServer(async (hReq: IncomingMessage, hRes: ServerResponse) => {
   // Parse the request URL
-  const parsedUrl = url.parse(req.url || '', true);
+  const parsedUrl = url.parse(hReq.url || '', true);
+  const query = parsedUrl.query
+  const req = {...hReq, query} as RequestI
 
   try {
-    const controllerFunction = RouteHandler(req.method, parsedUrl.pathname);
+    const controllerFunction = RouteHandler(hReq.method, parsedUrl.pathname);
     // process the controller logic
-    controllerFunction(req, res);
-  } catch (error : unknown) {
+    await controllerFunction(req, hRes);
+  } catch (error) {
     // if error is encountered then handle and send back the client as JSON
-    ErrorHandler(req, res, error as HttpErrorI)
+    ErrorHandler(req, hRes, error)
   }
   // if req is not ended then
   // Todo: end logic

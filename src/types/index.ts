@@ -1,9 +1,14 @@
 import { IncomingMessage, ServerResponse } from "http"
 
-export type RequestI = IncomingMessage
+export interface RequestI extends IncomingMessage{
+  query: {
+    [key: string]: string
+  }
+}
+
 export type ResponseI = ServerResponse
 
-export type ControllerFunctionI = (req: RequestI, res: ResponseI) => void
+export type ControllerFunctionI = (req: RequestI, res: ResponseI) => Promise<void>
 
 export type HttpErrorI = {
   statusCode: number,

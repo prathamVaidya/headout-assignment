@@ -1,22 +1,43 @@
+import { fileExists, getFileStream, getFileStreamByLineNumber } from "../services/file.service.js";
 import { RequestI, ResponseI } from "../types/index.js";
 import HttpError from "../utils/HttpError.js";
 
-const FileController = (req: RequestI, res: ResponseI): void => {
+const FileController = async (req: RequestI, res: ResponseI): Promise<void> => {
   // Extract query parameters
-  const queryParams = new URL(req.url).searchParams;
-  const fileName = queryParams.get('m');
-  const lineNumber = queryParams.get('n');
+  const fileName = req.query.n;
+  const lineNumber = req.query.m ? parseInt(req.query.m) : null;
 
   if(!fileName || !fileName.trim()){
-      throw new HttpError(500, "m is required parameter");
+      throw new HttpError(400, "n is required parameter");
   }
 
-  // You can now use m and n as needed
-  console.log('Query Parameter m:', fileName);
-  console.log('Query Parameter n:', lineNumber);
+  // Todo: Check any side cases validations
 
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('File Found');
+  const filePath = `tmp/data/${fileName}.txt`
+
+  if(!await fileExists(filePath)){
+    throw new HttpError(400, "n is invalid. No file found with name " + fileName);
+  }
+
+  // Line Number Content Only
+  if(lineNumber){
+    const fileStream = getFileStreamByLineNumber(filePath, lineNumber);
+    fileStream.pipe(res)
+    fileStream.on('error', (err) => {
+      console.error('Error reading file:', err);
+      // throw new HttpError(500, "Internal Server Error: Unable to Read file")
+    });
+
+    return;
+  }
+
+  // Whole File Content
+  const fileStream = getFileStream(filePath);
+  fileStream.pipe(res)
+  fileStream.on('error', (err) => {
+    console.error('Error reading file:', err);
+    // throw new HttpError(500, "Internal Server Error: Unable to Read file")
+  });
 };
 
 export default FileController;

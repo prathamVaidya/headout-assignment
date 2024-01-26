@@ -112,13 +112,16 @@ yarn cli
 
   This will generate 10 dummy files, each of 200MB.
 
-### Optimization
+## Optimization
+
+  ### Custom Http Server over Express Server
+  Using the custom Http Server over express helped in implementing lightweight server which can be specially tuned as per our requirements of large file serving. 
 
   ### File Reading in Stream
-  The file is input in stream in chunks.
+  Files are processed as streams, allowing for efficient and optimized chunk-based reading.
 
   ### Writing Server Response as Stream
-  The server responses with the stream of byte chunks that are piped from the file stream. 
+  The server responds by streaming byte chunks, seamlessly piped from the file stream, ensuring a responsive and scalable approach.
 
   #### Memory Restriction
   To achieve the Docker container size should allocate maximum of 1500 MB RAM and 2000m/2 Core CPU.

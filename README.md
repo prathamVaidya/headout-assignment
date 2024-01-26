@@ -8,7 +8,7 @@ Before getting started, ensure you have Node.js and npm (Node Package Manager) i
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/your-project.git
+git clone https://github.com/prathamVaidya/headout-assignment
 cd your-project
 ```
 
@@ -136,3 +136,9 @@ yarn cli
 ### Todo
 
  - Converting file generating function to async,  we can generate files parallelly decreasing the seed time.
+
+## Codebase Structure
+
+- Routes : Used for connecting all the routes to controller functions
+- Controllers : Used for creating controller functions that handles that man HTTP request. They can call and use services 
+- Services : Functions to perform specific operations

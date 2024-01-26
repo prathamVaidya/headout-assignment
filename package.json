@@ -8,7 +8,9 @@
   },
   "scripts": {
     "start": "node build/src/main.js",
+    "seed": "node build/src/cli.js seed -s 104857600 -n 5",
     "dev": "nodemon build/src/main.js",
+    "cli": "node build/src/cli.js",
     "clean": "rimraf coverage build tmp",
     "prebuild": "npm run lint",
     "build": "tsc -p tsconfig.json",
@@ -24,6 +26,7 @@
     "@types/node": "~20",
     "@typescript-eslint/eslint-plugin": "~6.15",
     "@typescript-eslint/parser": "~6.15",
+    "commander": "^11.1.0",
     "eslint": "~8.56",
     "eslint-config-prettier": "~9.1",
     "eslint-plugin-jest": "~27.6",
